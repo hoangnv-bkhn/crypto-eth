@@ -5,7 +5,7 @@ var DappTokenSale = artifacts.require("./DappTokenSale.sol");
 contract('DappTokenSale', function(accounts) {
     var tokenInstance;
     var tokenSaleInstance;
-    var admin = accounts[0]
+    var admin = accounts[0];
     var buyer = accounts[1];
     var tokenPrice = 1000000000000000; // wei
     var tokensAvailable = 750000;
@@ -59,6 +59,28 @@ contract('DappTokenSale', function(accounts) {
             return tokenSaleInstance.buyTokens(800000, {from: buyer, value: numberOfTokens * tokenPrice});
         }).then(assert.fail).catch(function(error){
             assert(error.message.toString().indexOf('revert') >= 0, 'cannot purchase more tokens than available');
+        });
+    });
+
+    it('ends token sale', function() {
+        return DappToken.deployed().then(function(instance) {
+            // grab token instance first
+            tokenInstance = instance;
+            return DappTokenSale.deployed();
+        }).then(function(instance){
+            // then grab token sale instance
+            tokenSaleInstance = instance;
+            return tokenSaleInstance.endSale({from: buyer});
+        }).then(assert.fail).catch(function(error){
+            assert(error.message.toString().indexOf('revert') >= 0, 'must be admin to end sale');
+            return tokenSaleInstance.endSale({from: admin});
+        }).then(function(receipt){
+            return tokenInstance.balanceOf(admin);
+        }).then(function(balance){
+            assert.equal(balance.toNumber(), 999990, 'returns all unsold DAPP tokens to admin');
+            return web3.eth.getBalance(tokenSaleInstance.address);
+        }).then(function(balance){
+            assert.equal(balance, 0);
         });
     });
 });

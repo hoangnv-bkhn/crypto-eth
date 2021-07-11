@@ -2,6 +2,9 @@ var DappToken = artifacts.require("./DappToken.sol");
 
 contract('DappToken', function(accounts){
     var tokenInstance;
+    var admin = accounts[0];
+    var amountBurned = 100000;
+    var totalSupplyInitial;
 
     it("initializes the contract with the correct values", function(){
         return DappToken.deployed().then(function(instance){
@@ -111,6 +114,55 @@ contract('DappToken', function(accounts){
             return tokenInstance.allowance(fromAccount, spendingAccount);
         }).then(function(allowance){
             assert.equal(allowance.toNumber(), 0, 'deducts the amount from the allowance');
+        });
+    });
+
+    it('burns token test', function() {
+        return DappToken.deployed().then(function(instance) {
+            tokenInstance = instance;
+            return tokenInstance.totalSupply();
+        }).then(function(totalSupply){
+            totalSupplyInitial = totalSupply;
+            return tokenInstance.burn(amountBurned);
+        }).then(function(receipt){
+            assert.equal(receipt.logs.length, 2, 'triggers two events');
+            assert.equal(receipt.logs[0].event, 'Burn', 'should be the "Burn" event');
+            assert.equal(receipt.logs[0].args._burner, admin, 'logs the account that burn the tokens');
+            assert.equal(receipt.logs[0].args._value, amountBurned, 'logs the number of tokens burned');
+            return tokenInstance.totalSupply();
+        }).then(function(totalSupply){
+            assert.equal(totalSupply.toNumber(), totalSupplyInitial - amountBurned, 'burns token from totalSupply');
+        });
+    });
+
+    it('changes owner test', function() {
+        return DappToken.deployed().then(function(instance) {
+            tokenInstance = instance;
+            return tokenInstance.getOwner();
+        }).then(function(owner){
+            assert.equal(owner, '0x85F38f458645fe3512Fa50C920d53b842e3cF9Ca', 'owner is the first account in Ganache');
+            return tokenInstance.changeOwner(accounts[1]);
+        }).then(function(receipt){
+            assert.equal(receipt.logs.length, 1, 'triggers two events');
+            assert.equal(receipt.logs[0].event, 'OwnerSet', 'should be the "OwnerSet" event');
+            assert.equal(receipt.logs[0].args._newOwner, accounts[1], 'logs the account is becoming new Owner');
+            return tokenInstance.getOwner();
+        }).then(function(owner){
+            assert.equal(owner, '0xC92a84d0923f173C68F18d05a61Fc33FA5e48ECF', 'owner is the second account in Ganache');
+        });
+    });
+
+    it('locks token test', function() {
+        return DappToken.deployed().then(function(instance) {
+            tokenInstance = instance;
+            return tokenInstance.transfer.call(accounts[1], 250000, {from: accounts[0]});
+        }).then(function(success){
+            assert.equal(success, true);
+            return tokenInstance.isTransferable(false);
+        }).then(function(){
+            return tokenInstance.transfer.call(accounts[1], 250000, {from: accounts[0]});
+        }).then(assert.fail).catch(function(error){
+            assert(error.message.toString().indexOf('revert') >= 0, 'cannot transfer anymore');
         });
     });
 
