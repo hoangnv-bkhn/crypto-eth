@@ -1,0 +1,15 @@
+{
+    "name": "dapp-token-sale",
+    "version": "1.0.0",
+    "description": "Dapp Token Sale ICO",
+    "main": "truffle-config.js",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "dev": "lite-server"
+    },
+    "devDependencies": {
+        "lite-server": "^2.6.1"
+    }
+}

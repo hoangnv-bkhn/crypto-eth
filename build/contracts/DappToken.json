@@ -9191,103 +9191,14 @@
   },
   "networks": {
     "5777": {
-      "events": {
-        "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "_owner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "_spender",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "_value",
-              "type": "uint256"
-            }
-          ],
-          "name": "Approval",
-          "type": "event"
-        },
-        "0xcc16f5dbb4873280815c1ee09dbd06736cffcc184412cf7a71a0fdb75d397ca5": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "_burner",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "_value",
-              "type": "uint256"
-            }
-          ],
-          "name": "Burn",
-          "type": "event"
-        },
-        "0x342827c97908e5e2f71151c08502a66d44b6f758e3ac2f1de95f02eb95f0a735": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "_oldOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "_newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnerSet",
-          "type": "event"
-        },
-        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "_from",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "_to",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "_value",
-              "type": "uint256"
-            }
-          ],
-          "name": "Transfer",
-          "type": "event"
-        }
-      },
+      "events": {},
       "links": {},
-      "address": "0x73116237fBac0AE9D68F9b0895a06F5aC99Bc72e",
-      "transactionHash": "0x4a059fcd358ee2e0fcd2cd3f461a505f0ecde62e2331d761dd637e334e3f30a3"
+      "address": "0x5b781fd301466E645071e170e6bCfCb64D6aeADA",
+      "transactionHash": "0x599cbfa93a8a2e4ac143b32c35df21938ae65cc0ceddff907bde7655c3902390"
     }
   },
   "schemaVersion": "3.4.1",
-  "updatedAt": "2021-07-11T07:32:09.150Z",
+  "updatedAt": "2021-07-13T10:00:29.080Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

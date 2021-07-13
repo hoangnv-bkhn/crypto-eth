@@ -158,8 +158,20 @@ contract('DappToken', function(accounts){
             return tokenInstance.transfer.call(accounts[1], 250000, {from: accounts[0]});
         }).then(function(success){
             assert.equal(success, true);
-            return tokenInstance.isTransferable(false);
+            return tokenInstance.getOwner();
+        }).then(function(owner){
+            assert.equal(owner, '0xC92a84d0923f173C68F18d05a61Fc33FA5e48ECF', 'owner is the second account in Ganache');
+            return tokenInstance.isTransferable(false, {from: accounts[0]});
+        }).then(assert.fail).catch(function(error){
+            assert(error.message.toString().indexOf('revert') >= 0, 'only owner can lock token');
+            return tokenInstance.transferable();
+        }).then(function(transferable){
+            assert.equal(transferable, true, 'transferable must be true');
+            return tokenInstance.isTransferable(false, {from: accounts[1]});
         }).then(function(){
+            return tokenInstance.transferable();
+        }).then(function(transferable){
+            assert.equal(transferable, false, 'transferable must be false');
             return tokenInstance.transfer.call(accounts[1], 250000, {from: accounts[0]});
         }).then(assert.fail).catch(function(error){
             assert(error.message.toString().indexOf('revert') >= 0, 'cannot transfer anymore');
