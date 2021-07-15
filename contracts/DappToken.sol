@@ -1,9 +1,9 @@
 pragma solidity ^0.5.16;
 
 contract DappToken{
-    string public name = "DApp Token";
-    string public symbol = "DAPP";
-    string public standard = "DApp Token v1.0";
+    string public name = "Akai Churippu";
+    string public symbol = "ACP";
+    string public standard = "Akai Churippu v1.0";
     uint256 public totalSupply;
 
     mapping(address => uint256) public balanceOf;

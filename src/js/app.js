@@ -5,7 +5,7 @@ App = {
     loading: false,
     tokenPrice: 1000000000000000,
     tokensSold: 0,
-    tokensAvailable: 750000,
+    tokensAvailable: 10000000,
 
     init: function () {
         console.log("App initialized...");
